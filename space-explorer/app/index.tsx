@@ -1,7 +1,20 @@
-import { Text, View } from "react-native";
+import {Text, View} from "react-native";
+import {useDispatch} from "react-redux";
+import {useGetLocationAccess} from "@/hooks/useGetLocationAccess";
+import {useEffect} from "react";
+import {setLocationState} from "@/redux/location/location.slice";
 
 export default function Index() {
-  return (
+    const dispatch = useDispatch();
+    const locationAccess = useGetLocationAccess();
+
+    useEffect(() => {
+        if (locationAccess) {
+            dispatch(setLocationState(locationAccess));
+        }
+    }, [locationAccess]);
+
+    return (
     <View
       style={{
         flex: 1,
