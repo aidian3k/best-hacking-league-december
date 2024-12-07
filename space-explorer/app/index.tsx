@@ -1,6 +1,12 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import {
+    SearchPlanetField
+} from "@/app/components/search-planet-field/SearchPlanetField";
+import {useState} from "react";
 
 export default function Index() {
+    const [searchText, setSearchText] = useState("");
+
   return (
     <View
       style={{
@@ -9,7 +15,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+     <SearchPlanetField setSearchText={setSearchText} onSearch={() => console.log('Pressed data')}/>
     </View>
   );
 }
