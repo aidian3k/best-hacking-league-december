@@ -5,9 +5,9 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "DARK_MODE=media expo start --android",
-    "ios": "DARK_MODE=media expo start --ios",
-    "web": "DARK_MODE=media expo start --web",
+    "android": "DARK_MODE=media DARK_MODE=media expo start --android",
+    "ios": "DARK_MODE=media DARK_MODE=media expo start --ios",
+    "web": "DARK_MODE=media DARK_MODE=media expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@gluestack-ui/button": "^1.0.8",
+    "@gluestack-ui/icon": "^0.1.25",
+    "@gluestack-ui/input": "^0.1.32",
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.16",
     "@gluestack-ui/toast": "^1.0.8",
