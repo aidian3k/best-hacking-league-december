@@ -20,6 +20,7 @@ const [elements, setElements] = useState([
     { id: 8, name: "Planet B", distance: "450000000km", visibility: 75, avatar: "https://via.placeholder.com/50" },
     { id: 9, name: "Planet C", distance: "100000000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
 ]);
+import SkyMap from "@/app/SkyMap.component";
 
 export default function Index() {
     const [searchText, setSearchText] = useState("");
@@ -51,6 +52,7 @@ export default function Index() {
       }}
     >
         <SearchPlanetField searchText={searchText} setSearchText={setSearchText} onSearch={refetch} />
+        <SkyMap />
         <View style={styles.bottomButtonContainer}>
             <Button onPress={() => setShowDrawer(true)}>
                 <ButtonText>Visible elements</ButtonText>

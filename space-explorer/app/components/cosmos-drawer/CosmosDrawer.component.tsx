@@ -10,7 +10,7 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
-import { View, FlatList, Image } from "react-native";
+import { View, Image } from "react-native";
 import {styles} from "@/app/components/cosmos-drawer/CosmosDrawerStyles";
 
 interface DrawerComponentProps {
