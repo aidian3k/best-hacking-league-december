@@ -1,12 +1,13 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
-import { HStack } from "@/components/ui/hstack";
+import React, {Dispatch, SetStateAction, useEffect} from "react";
+import {HStack} from "@/components/ui/hstack";
 import {Input, InputField, InputIcon, InputSlot} from "@/components/ui/input";
-import { SearchIcon } from "@/components/ui/icon";
-import {Button, ButtonSpinner, ButtonText} from "@/components/ui/button";
+import {SearchIcon} from "@/components/ui/icon";
+import {Button, ButtonText} from "@/components/ui/button";
 import {VStack} from "@/components/ui/vstack";
-import {Pressable, Text, TouchableOpacity, View} from "react-native";
+import {Pressable, Text, View} from "react-native";
 import {useGetLocationPropositions} from "@/hooks/useGetLocationPropositions";
 import {Divider} from "@/components/ui/divider";
+import {Spinner} from "@/components/ui/spinner";
 
 export type SearchSpaceObjectProps = {
     searchText: string;
@@ -16,11 +17,18 @@ export type SearchSpaceObjectProps = {
 
 export const SearchPlanetField = ({ searchText, setSearchText, onSearch }: SearchSpaceObjectProps) => {
     const [propositionCities, setPropositionCities] = React.useState<string[]>([]);
-    const {data, isLoading, isError, onRefresh, refreshing} = useGetLocationPropositions(searchText);
+    const [autocompleteShown, setAutocompleteShown] = React.useState<boolean>(false);
+    const {data, isFetching, isError, onRefresh, refreshing} = useGetLocationPropositions(searchText);
+
+    const handleAutocompleteSelected = (suggestion: string) => {
+        setSearchText(suggestion)
+        setAutocompleteShown(false);
+    }
 
     useEffect(() => {
         if(!!data) {
             setPropositionCities(data?.predictions.map((prediction: any) => prediction.description));
+            setAutocompleteShown(true);
         }
     }, [data]);
 
@@ -33,20 +41,19 @@ export const SearchPlanetField = ({ searchText, setSearchText, onSearch }: Searc
                         </InputSlot>
                         <InputField placeholder="Search..." value={searchText} onChangeText={text => setSearchText(text)}/>
                     </Input>
-                    {propositionCities.length > 0 && (
-                        <VStack className="py-2 w-full bg-white border rounded-lg shadow-lg">
-                            {propositionCities.map((suggestion, index) => (
-                                <VStack className={'w-full flex flex-col gap-1'} key={index}>
-                                    <TouchableOpacity className={'w-full'} onPress={() => console.log('chiuj')}>
-                                        <View>
-                                            <Text className="px-4 py-2 text-sm text-black hover:bg-gray-100">{suggestion}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <Divider/>
-                                </VStack>
-                            ))}
-                        </VStack>
-                    )}
+                    {autocompleteShown &&<VStack className="w-full bg-white border rounded-lg shadow-lg">
+                        {isFetching && <Spinner />}
+                        {propositionCities.length > 0 && propositionCities.map((suggestion, index) => (
+                            <VStack className={'w-full flex flex-col gap-1'} key={index}>
+                                <Pressable className={'w-full'} onPress={() => handleAutocompleteSelected(suggestion)}>
+                                    <View>
+                                        <Text className="px-4 py-2 text-sm text-black">{suggestion}</Text>
+                                    </View>
+                                </Pressable>
+                                <Divider />
+                            </VStack>
+                        ))}
+                    </VStack>}
                 </VStack>
 
             <View className={'w-1/4 flex'}>
