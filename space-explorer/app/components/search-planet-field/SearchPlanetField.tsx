@@ -33,14 +33,24 @@ export const SearchPlanetField = ({ searchText, setSearchText, onSearch }: Searc
     }, [data]);
 
     return (
-        <HStack className={'w-full flex px-2 align-middle gap-1 justify-center'}>
+        <HStack className={'w-full flex px-2 pt-2 align-middle gap-1 justify-center'}>
                 <VStack className={'w-3/4'}>
                     <Input>
                         <InputSlot className="pl-3">
                             <InputIcon as={SearchIcon} />
                         </InputSlot>
-                        <InputField placeholder="Search..." value={searchText} onChangeText={text => setSearchText(text)}/>
+                        <InputField
+                            placeholder="Search..."
+                            value={searchText}
+                            onChangeText={text => setSearchText(text)}
+                            style={{
+                                color: 'white',
+                                textAlignVertical: 'center',  // Ustawienie wyrównania tekstu w pionie
+                                paddingVertical: 10,          // Możesz dostosować, aby uzyskać idealne wyrównanie
+                            }}
+                        />
                     </Input>
+
                     {autocompleteShown &&<VStack className="w-full bg-white border rounded-lg shadow-lg">
                         {isFetching && <Spinner />}
                         {propositionCities.length > 0 && propositionCities.map((suggestion, index) => (

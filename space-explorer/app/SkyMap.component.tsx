@@ -60,8 +60,6 @@ const SkyMap = () => {
             const newTranslateX = savedTranslateX.value + e.translationX;
             const newTranslateY = savedTranslateY.value + e.translationY;
 
-            console.log(newTranslateY)
-
             if (newTranslateX >= -850 && newTranslateX <= 850) {
                 translateX.value = newTranslateX;
             }
@@ -194,7 +192,6 @@ const SkyMap = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#000000",
     },
     canvasContainer: {
         alignItems: "center",

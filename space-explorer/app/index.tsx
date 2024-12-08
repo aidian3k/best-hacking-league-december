@@ -1,6 +1,6 @@
 import {SearchPlanetField} from "@/app/components/search-planet-field/SearchPlanetField";
 import {useEffect, useState} from "react";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, Text} from "react-native";
 import {useDispatch} from "react-redux";
 import {useGetLocationAccess} from "@/hooks/useGetLocationAccess";
 import {setLocationState} from "@/redux/location/location.slice";
@@ -24,7 +24,6 @@ import SkyMap from "@/app/SkyMap.component";
 
 export default function Index() {
     const [searchText, setSearchText] = useState("");
-    console.log(searchText)
     const dispatch = useDispatch();
     const locationAccess = useGetLocationAccess();
 
@@ -49,9 +48,13 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#000000",
+        // position: "relative"
       }}
     >
-        <SearchPlanetField searchText={searchText} setSearchText={setSearchText} onSearch={refetch} />
+        <View style={{ position: "absolute", top: 10, zIndex: 1000 }}>
+            <SearchPlanetField searchText={searchText} setSearchText={setSearchText} onSearch={refetch} />
+        </View>
         <SkyMap />
         <View style={styles.bottomButtonContainer}>
             <Button onPress={() => setShowDrawer(true)}>
