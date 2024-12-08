@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useGetLocationPropositionsRequest } from '@/app/query/google-geocoder/GoogleGeocoderQueries';
 
 export const useGetLocationPropositions = (searchText: string) => {
-  const debouncedSearchText = useDebounce<string>(searchText, 2000);
+  const debouncedSearchText = useDebounce<string>(searchText, 500);
   const [refreshing, setRefreshing] = useState(false);
 
   const { data, isFetching, isError, refetch } = useGetLocationPropositionsRequest(debouncedSearchText);

@@ -182,6 +182,10 @@ const SkyMap: FC<SkyMapProps> = ({ bodiesPositions }) => {
                             ))}
                             {bodiesPositions && bodiesPositions.data.table.rows.map((row, index) => {
                                 const celestialBody = row.cells[0];
+
+                                if (celestialBody.position.horizontal.altitude.degrees < 0) {
+                                    return;
+                                }
                                 const deg = celestialBody.position.equatorial.rightAscension.string.split(" ");
                                 const degs = deg.map(deg => deg.slice(0, -1))
                                 const raDeg = raToDegrees({

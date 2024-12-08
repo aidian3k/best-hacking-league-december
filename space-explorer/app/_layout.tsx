@@ -12,7 +12,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <GluestackUIProvider mode="light">
         <Provider store={store}>
-          <Stack />
+          <Stack screenOptions={{ headerShown: false }} />
         </Provider>
       </GluestackUIProvider>
     </QueryClientProvider>

@@ -6,6 +6,8 @@ export function useGetLocationOfSearchedPlace(addressLocation: string) {
     return useQuery({
         queryKey: ["getLocationOfSearchedPlace"],
         queryFn: async () => {
+            console.log("JEstem")
+            console.log(addressLocation);
             if(!addressLocation) {
                 return;
             }
@@ -19,6 +21,7 @@ export function useGetLocationOfSearchedPlace(addressLocation: string) {
                     },
                 }
             )
+            console.log(response.data.results[0].geometry);
             return response.data;
         },
     });

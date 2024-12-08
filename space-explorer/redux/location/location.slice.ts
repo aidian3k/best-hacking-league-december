@@ -24,6 +24,7 @@ const locationSlice = createSlice({
     initialState,
     reducers: {
         setLocation: (state, action: PayloadAction<Location.LocationObject>) => {
+            console.log(action.payload)
             state.location = action.payload;
         },
         setError: (state, action: PayloadAction<string>) => {

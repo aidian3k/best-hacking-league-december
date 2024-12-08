@@ -1,45 +1,36 @@
 import {SearchPlanetField} from "@/app/components/search-planet-field/SearchPlanetField";
 import {useEffect, useState} from "react";
-import {View, StyleSheet, Text} from "react-native";
-import {useDispatch} from "react-redux";
+import {View, StyleSheet} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
 import {useGetLocationAccess} from "@/hooks/useGetLocationAccess";
-import {setLocationState} from "@/redux/location/location.slice";
 import { useGetLocationFromSearchField } from "@/hooks/useGetLocationFromSearchField";
 import {useGetBodiesPositions} from "@/api/query/bodies/bodiesQueries";
 import {Button, ButtonText} from "@/components/ui/button";
 import {CosmosDrawer} from "@/app/components/cosmos-drawer/CosmosDrawer.component";
 
-const elements = [
-    { id: 1, name: "Planet A", distance: "20000000km", visibility: 90, avatar: "https://via.placeholder.com/50" },
-    { id: 2, name: "Planet B", distance: "45000000km", visibility: 75, avatar: "https://via.placeholder.com/50" },
-    { id: 3, name: "Planet C", distance: "100000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
-    { id: 4, name: "Planet A", distance: "200000000km", visibility: 90, avatar: "https://via.placeholder.com/50" },
-    { id: 5, name: "Planet B", distance: "4000000005km", visibility: 75, avatar: "https://via.placeholder.com/50" },
-    { id: 6, name: "Planet C", distance: "1000000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
-    { id: 7, name: "Planet A", distance: "2000000000km", visibility: 90, avatar: "https://via.placeholder.com/50" },
-    { id: 8, name: "Planet B", distance: "450000000km", visibility: 75, avatar: "https://via.placeholder.com/50" },
-    { id: 9, name: "Planet C", distance: "100000000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
-];
 import SkyMap from "@/app/SkyMap.component";
 import {BodiesPositionsResponse} from "@/api/query/bodies/bodiesQueries.types";
+import {RootState} from "@/redux/store";
 
 export default function Index() {
     const [searchText, setSearchText] = useState("");
-    const dispatch = useDispatch();
     const locationAccess = useGetLocationAccess();
+    const location = useSelector((state: RootState) => state.location);
+    const [locationToSearch, setLocationToSearch] = useState(locationAccess.location);
 
-    const { data, isLoading, isError, onRefresh, refreshing, refetch } =
+    const { refetch } =
         useGetLocationFromSearchField(searchText);
     const {data: bodiesPositions} = useGetBodiesPositions(
-        locationAccess.location.coords.latitude,
-        locationAccess.location.coords.longitude
+        locationToSearch.coords.latitude,
+        locationToSearch.coords.longitude,
     );
 
     useEffect(() => {
-        if (locationAccess) {
-            dispatch(setLocationState(locationAccess));
+        if (location) {
+            setLocationToSearch(location.location);
         }
-    }, [locationAccess, data]);
+    }, [location])
+
     const [showDrawer, setShowDrawer] = useState(false);
 
     const visibleObjects = bodiesPositions ?

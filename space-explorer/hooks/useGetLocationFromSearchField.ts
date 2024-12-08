@@ -12,35 +12,45 @@ export const useGetLocationFromSearchField = (searchText: string) => {
   const { data, isLoading, isError, refetch } = useGetLocationOfSearchedPlace(debouncedSearchText);
 
   useEffect(() => {
-    if (!!debouncedSearchText) {
-      refetch();
+    // const search = async () => {
+    //   if (!!debouncedSearchText) {
+    //     const response = await refetch();
+    //     console.log(response);
+    //   }
+    // }
+
+    console.log(debouncedSearchText);
+    // search();
+  }, [debouncedSearchText]);
+
+  useEffect(() => {
+    console.log("chuj")
+    // console.log(data);
+    if (!data) {
+      console.log("nie ma data")
+      return
     }
-  }, []);
+    dispatch(
+        setLocation({
+          timestamp: Date.now(),
+          coords: {
+            latitude: data.results[0].geometry.location.lat,
+            longitude: data.results[0].geometry.location.lng,
+            altitude: null,
+            accuracy: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null
+          }
+        })
+    );
+  }, [data])
 
   const onRefresh = () => {
     setRefreshing(true);
     refetch().finally(() => {
       setRefreshing(false);
     });
-
-    if (!!data && !isLoading && !isError) {
-      if (data.results.length === 0) {
-        dispatch(
-          setLocation({
-            timestamp: Date.now(),
-            coords: {
-              latitude: data.results[0].geometry.location.lat,
-              longitude: data.results[0].geometry.location.lng,
-              altitude: null,
-              accuracy: null,
-              altitudeAccuracy: null,
-              heading: null,
-              speed: null
-            }
-          })
-        );
-      }
-    }
   };
 
   return {
