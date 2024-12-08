@@ -9,7 +9,7 @@ import {useGetBodiesPositions} from "@/api/query/bodies/bodiesQueries";
 import {Button, ButtonText} from "@/components/ui/button";
 import {CosmosDrawer} from "@/app/components/cosmos-drawer/CosmosDrawer.component";
 
-const [elements, setElements] = useState([
+const elements = [
     { id: 1, name: "Planet A", distance: "20000000km", visibility: 90, avatar: "https://via.placeholder.com/50" },
     { id: 2, name: "Planet B", distance: "45000000km", visibility: 75, avatar: "https://via.placeholder.com/50" },
     { id: 3, name: "Planet C", distance: "100000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
@@ -19,7 +19,7 @@ const [elements, setElements] = useState([
     { id: 7, name: "Planet A", distance: "2000000000km", visibility: 90, avatar: "https://via.placeholder.com/50" },
     { id: 8, name: "Planet B", distance: "450000000km", visibility: 75, avatar: "https://via.placeholder.com/50" },
     { id: 9, name: "Planet C", distance: "100000000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
-]);
+];
 import SkyMap from "@/app/SkyMap.component";
 
 export default function Index() {
