@@ -5,13 +5,15 @@ import {useDispatch} from "react-redux";
 import {useGetLocationAccess} from "@/hooks/useGetLocationAccess";
 import {setLocationState} from "@/redux/location/location.slice";
 import {useGetBodiesPositions} from "@/api/query/bodies/bodiesQueries";
+import {Link, useNavigation} from "expo-router";
 
 export default function Index() {
+    const navigation = useNavigation();
     const [searchText, setSearchText] = useState("");
     const dispatch = useDispatch();
     const locationAccess = useGetLocationAccess();
     const {data: bodiesPositions} = useGetBodiesPositions(locationAccess.location.coords.latitude, locationAccess.location.coords.latitude);
-    console.log(bodiesPositions);
+
     useEffect(() => {
         if (locationAccess) {
             dispatch(setLocationState(locationAccess));
@@ -26,7 +28,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-     <SearchPlanetField setSearchText={setSearchText} onSearch={() => console.log('Pressed data')}/>
+        <SearchPlanetField setSearchText={setSearchText} onSearch={() => console.log('Pressed data')}/>
+        <Link href={"/celestial-body"} relativeToDirectory={true}>Go to CelestialBody</Link>
     </View>
   );
 }

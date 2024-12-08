@@ -2,7 +2,7 @@ import React from "react";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField, InputIcon } from "@/components/ui/input";
 import { SearchIcon } from "@/components/ui/icon";
-import {Button} from "@/components/ui/button";
+import {Button, ButtonText} from "@/components/ui/button";
 import {VStack} from "@/components/ui/vstack";
 
 export type SearchSpaceObjectProps = {
@@ -42,7 +42,7 @@ export const SearchPlanetField = ({ setSearchText, onSearch }: SearchSpaceObject
                 className="flex-1 bg-darkBlue-500 text-white px-4 py-2"
                 onPress={onSearch}
             >
-                Search
+                <ButtonText>Search</ButtonText>
             </Button>
         </VStack>
     );
