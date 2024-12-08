@@ -21,6 +21,7 @@ const elements = [
     { id: 9, name: "Planet C", distance: "100000000000km", visibility: 60, avatar: "https://via.placeholder.com/50" },
 ];
 import SkyMap from "@/app/SkyMap.component";
+import {BodiesPositionsResponse} from "@/api/query/bodies/bodiesQueries.types";
 
 export default function Index() {
     const [searchText, setSearchText] = useState("");
@@ -31,7 +32,7 @@ export default function Index() {
         useGetLocationFromSearchField(searchText);
     const {data: bodiesPositions} = useGetBodiesPositions(
         locationAccess.location.coords.latitude,
-        locationAccess.location.coords.latitude
+        locationAccess.location.coords.longitude
     );
 
     useEffect(() => {
@@ -41,6 +42,17 @@ export default function Index() {
     }, [locationAccess, data]);
     const [showDrawer, setShowDrawer] = useState(false);
 
+    const visibleObjects = bodiesPositions ?
+        bodiesPositions.data.table.rows.map((row, index) => {
+            return {
+                id: index,
+                name: row.entry.name,
+                distance: row.cells[0].distance.fromEarth.km,
+                visibility: 75,
+                avatar: "https://via.placeholder.com/50"
+            }
+        }) : []
+
 
     return (
     <View
@@ -49,19 +61,18 @@ export default function Index() {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#000000",
-        // position: "relative"
       }}
     >
         <View style={{ position: "absolute", top: 10, zIndex: 1000 }}>
             <SearchPlanetField searchText={searchText} setSearchText={setSearchText} onSearch={refetch} />
         </View>
-        <SkyMap />
+        <SkyMap bodiesPositions={bodiesPositions as BodiesPositionsResponse}/>
         <View style={styles.bottomButtonContainer}>
             <Button onPress={() => setShowDrawer(true)}>
                 <ButtonText>Visible elements</ButtonText>
             </Button>
         </View>
-        <CosmosDrawer isOpen={showDrawer} onClose={() => setShowDrawer(false)} elements={elements}/>
+        <CosmosDrawer isOpen={showDrawer} onClose={() => setShowDrawer(false)} elements={visibleObjects}/>
     </View>
   );
 }

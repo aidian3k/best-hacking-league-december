@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, {FC, useState} from "react";
+import {StyleSheet, View, Text, Touchable, Platform} from "react-native";
 import {
     GestureHandlerRootView,
     GestureDetector,
@@ -10,7 +10,10 @@ import Animated, {
     useSharedValue,
     withDecay,
 } from "react-native-reanimated";
-import {Canvas, Circle, Group, Line, Path} from "@shopify/react-native-skia";
+import {Canvas, Circle, Group, Line, matchFont, Path, Text as SkiaText} from "@shopify/react-native-skia";
+import {BodiesPositionsResponse} from "@/api/query/bodies/bodiesQueries.types";
+import {useGetBodiesPositions} from "@/api/query/bodies/bodiesQueries";
+import {useGetLocationAccess} from "@/hooks/useGetLocationAccess";
 
 type Star = {
     ra: { h: number; m: number; s: number };
@@ -39,7 +42,11 @@ const normalizeCoordinates = (raDeg: number, dec: number, size: number) => {
     return { x, y };
 };
 
-const SkyMap = () => {
+type SkyMapProps = {
+    bodiesPositions: BodiesPositionsResponse
+}
+
+const SkyMap: FC<SkyMapProps> = ({ bodiesPositions }) => {
     const [mapSize] = useState(2000);
 
     const translateX = useSharedValue(0);
@@ -50,6 +57,12 @@ const SkyMap = () => {
     const savedTranslateY = useSharedValue(0);
     const scale = useSharedValue(1);
     const savedScale = useSharedValue(1);
+    // const locationAccess = useGetLocationAccess()
+    //
+    // const {data: bodiesPositions, error} = useGetBodiesPositions(
+    //     locationAccess.location.coords.latitude,
+    //     locationAccess.location.coords.latitude
+    // );
 
     const panGesture = Gesture.Pan()
         .onStart(() => {
@@ -130,6 +143,15 @@ const SkyMap = () => {
         return meridians;
     };
 
+    const fontFamily = Platform.select({ ios: "Helvetica", default: "serif" });
+    const fontStyle = {
+        fontFamily,
+        fontSize: 14,
+        fontStyle: "italic",
+        fontWeight: "bold",
+    };
+    const font = matchFont(fontStyle);
+
     return (
         <View style={styles.container}>
             <GestureHandlerRootView>
@@ -158,33 +180,46 @@ const SkyMap = () => {
                                     opacity={0.3}
                                 />
                             ))}
-                            {stars.map((star, index) => {
-                                const raDeg = raToDegrees(star.ra);
-                                const { x, y } = normalizeCoordinates(raDeg, star.dec, mapSize);
+                            {bodiesPositions && bodiesPositions.data.table.rows.map((row, index) => {
+                                const celestialBody = row.cells[0];
+                                const deg = celestialBody.position.equatorial.rightAscension.string.split(" ");
+                                const degs = deg.map(deg => deg.slice(0, -1))
+                                const raDeg = raToDegrees({
+                                    h: parseInt(degs[0]),
+                                    m: parseInt(degs[1]),
+                                    s: parseInt(degs[2])
+                                });
+                                const { x, y } = normalizeCoordinates(raDeg, celestialBody.position.equatorial.declination.degrees, mapSize);
 
-                                const starRadius = 5 - star.magnitude;
+                                const starRadius = 5 - celestialBody.extraInfo?.magnitude;
                                 const glowRadius = starRadius * 8;
 
                                 return (
                                     <Group key={index}>
                                         <Circle cx={x} cy={y} r={glowRadius} color="white" opacity={0.1} />
                                         <Circle cx={x} cy={y} r={starRadius} color="#FFFFFF" />
+                                        <SkiaText
+                                            x={x + 10} // Przesunięcie tekstu, aby nie nachodził na gwiazdę
+                                            y={y - 10}
+                                            color={"white"}
+                                            text={celestialBody.name}
+                                            font={font} // Zamień `null` na zdefiniowany font, jeśli masz
+                                        />
                                     </Group>
                                 );
                             })}
                         </Canvas>
-
                     </Animated.View>
                 </GestureDetector>
             </GestureHandlerRootView>
-            <View style={styles.infoContainer}>
-                <Text style={styles.infoText}>
-                    Zoom: {scale.value.toFixed(2)}x
-                </Text>
-                <Text style={styles.infoText}>
-                    Rotation: {(rotation.value / Math.PI) * 180}°
-                </Text>
-            </View>
+            {/*<View style={styles.infoContainer}>*/}
+            {/*    <Text style={styles.infoText}>*/}
+            {/*        Zoom: {scale.value.toFixed(2)}x*/}
+            {/*    </Text>*/}
+            {/*    <Text style={styles.infoText}>*/}
+            {/*        Rotation: {(rotation.value / Math.PI) * 180}°*/}
+            {/*    </Text>*/}
+            {/*</View>*/}
         </View>
     );
 };

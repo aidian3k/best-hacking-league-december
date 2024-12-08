@@ -1,6 +1,5 @@
 import useDebounce from '@/hooks/common/useDebounce';
 import { useEffect, useState } from 'react';
-import { setLocation } from '@/redux/location/location.slice';
 import { useGetLocationPropositionsRequest } from '@/app/query/google-geocoder/GoogleGeocoderQueries';
 
 export const useGetLocationPropositions = (searchText: string) => {

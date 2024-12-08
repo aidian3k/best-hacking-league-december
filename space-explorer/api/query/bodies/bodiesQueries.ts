@@ -17,6 +17,7 @@ export const useGetBodiesPositions = (latitude: number, longitude: number) => {
             const currentDateTime: string = new Date().toISOString();
             const currentDate = currentDateTime.substring(0, currentDateTime.indexOf("T"));
             const currentTime = currentDateTime.substring(currentDateTime.indexOf("T") + 1, currentDateTime.indexOf("."));
+            console.log("Wchodzę")
             const response = await astronomyApiService.get<BodiesPositionsResponse>(
                 `${Endpoints.BODIES_POSITIONS}`, {
                     params: {
@@ -28,6 +29,7 @@ export const useGetBodiesPositions = (latitude: number, longitude: number) => {
                         time: currentTime,
                     },
                 });
+            console.log(response.data)
             return response.data;
         }
     })
