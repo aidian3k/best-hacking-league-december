@@ -1,10 +1,10 @@
-import {configureStore} from "@reduxjs/toolkit";
-import locationReducer from "./location/location.slice"
+import { configureStore } from '@reduxjs/toolkit';
+import locationReducer from './location/location.slice';
 
 export const store = configureStore({
-    reducer: {
-        location: locationReducer
-    },
+  reducer: {
+    location: locationReducer
+  }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

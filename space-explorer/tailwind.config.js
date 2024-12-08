@@ -2,8 +2,8 @@ import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "media",
-  content: ["app/**/*.{tsx,jsx,ts,js}", "components/**/*.{tsx,jsx,ts,js}"],
+  darkMode: 'media',
+  content: ['app/**/*.{tsx,jsx,ts,js}', 'components/**/*.{tsx,jsx,ts,js}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
@@ -20,7 +20,7 @@ module.exports = {
           700: 'rgb(var(--color-primary-700)/<alpha-value>)',
           800: 'rgb(var(--color-primary-800)/<alpha-value>)',
           900: 'rgb(var(--color-primary-900)/<alpha-value>)',
-          950: 'rgb(var(--color-primary-950)/<alpha-value>)',
+          950: 'rgb(var(--color-primary-950)/<alpha-value>)'
         },
         secondary: {
           0: 'rgb(var(--color-secondary-0)/<alpha-value>)',
@@ -34,7 +34,7 @@ module.exports = {
           700: 'rgb(var(--color-secondary-700)/<alpha-value>)',
           800: 'rgb(var(--color-secondary-800)/<alpha-value>)',
           900: 'rgb(var(--color-secondary-900)/<alpha-value>)',
-          950: 'rgb(var(--color-secondary-950)/<alpha-value>)',
+          950: 'rgb(var(--color-secondary-950)/<alpha-value>)'
         },
         tertiary: {
           50: 'rgb(var(--color-tertiary-50)/<alpha-value>)',
@@ -47,7 +47,7 @@ module.exports = {
           700: 'rgb(var(--color-tertiary-700)/<alpha-value>)',
           800: 'rgb(var(--color-tertiary-800)/<alpha-value>)',
           900: 'rgb(var(--color-tertiary-900)/<alpha-value>)',
-          950: 'rgb(var(--color-tertiary-950)/<alpha-value>)',
+          950: 'rgb(var(--color-tertiary-950)/<alpha-value>)'
         },
         error: {
           0: 'rgb(var(--color-error-0)/<alpha-value>)',
@@ -61,7 +61,7 @@ module.exports = {
           700: 'rgb(var(--color-error-700)/<alpha-value>)',
           800: 'rgb(var(--color-error-800)/<alpha-value>)',
           900: 'rgb(var(--color-error-900)/<alpha-value>)',
-          950: 'rgb(var(--color-error-950)/<alpha-value>)',
+          950: 'rgb(var(--color-error-950)/<alpha-value>)'
         },
         success: {
           0: 'rgb(var(--color-success-0)/<alpha-value>)',
@@ -75,7 +75,7 @@ module.exports = {
           700: 'rgb(var(--color-success-700)/<alpha-value>)',
           800: 'rgb(var(--color-success-800)/<alpha-value>)',
           900: 'rgb(var(--color-success-900)/<alpha-value>)',
-          950: 'rgb(var(--color-success-950)/<alpha-value>)',
+          950: 'rgb(var(--color-success-950)/<alpha-value>)'
         },
         warning: {
           0: 'rgb(var(--color-warning-0)/<alpha-value>)',
@@ -89,7 +89,7 @@ module.exports = {
           700: 'rgb(var(--color-warning-700)/<alpha-value>)',
           800: 'rgb(var(--color-warning-800)/<alpha-value>)',
           900: 'rgb(var(--color-warning-900)/<alpha-value>)',
-          950: 'rgb(var(--color-warning-950)/<alpha-value>)',
+          950: 'rgb(var(--color-warning-950)/<alpha-value>)'
         },
         info: {
           0: 'rgb(var(--color-info-0)/<alpha-value>)',
@@ -103,7 +103,7 @@ module.exports = {
           700: 'rgb(var(--color-info-700)/<alpha-value>)',
           800: 'rgb(var(--color-info-800)/<alpha-value>)',
           900: 'rgb(var(--color-info-900)/<alpha-value>)',
-          950: 'rgb(var(--color-info-950)/<alpha-value>)',
+          950: 'rgb(var(--color-info-950)/<alpha-value>)'
         },
         typography: {
           0: 'rgb(var(--color-typography-0)/<alpha-value>)',
@@ -120,7 +120,7 @@ module.exports = {
           950: 'rgb(var(--color-typography-950)/<alpha-value>)',
           white: '#FFFFFF',
           gray: '#D4D4D4',
-          black: '#181718',
+          black: '#181718'
         },
         outline: {
           0: 'rgb(var(--color-outline-0)/<alpha-value>)',
@@ -134,7 +134,7 @@ module.exports = {
           700: 'rgb(var(--color-outline-700)/<alpha-value>)',
           800: 'rgb(var(--color-outline-800)/<alpha-value>)',
           900: 'rgb(var(--color-outline-900)/<alpha-value>)',
-          950: 'rgb(var(--color-outline-950)/<alpha-value>)',
+          950: 'rgb(var(--color-outline-950)/<alpha-value>)'
         },
         background: {
           0: 'rgb(var(--color-background-0)/<alpha-value>)',
@@ -155,25 +155,25 @@ module.exports = {
           success: 'rgb(var(--color-background-success)/<alpha-value>)',
           info: 'rgb(var(--color-background-info)/<alpha-value>)',
           light: '#FBFBFB',
-          dark: '#181719',
+          dark: '#181719'
         },
         indicator: {
           primary: 'rgb(var(--color-indicator-primary)/<alpha-value>)',
           info: 'rgb(var(--color-indicator-info)/<alpha-value>)',
-          error: 'rgb(var(--color-indicator-error)/<alpha-value>)',
-        },
+          error: 'rgb(var(--color-indicator-error)/<alpha-value>)'
+        }
       },
       fontFamily: {
         heading: undefined,
         body: undefined,
         mono: undefined,
-        roboto: ['Roboto', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif']
       },
       fontWeight: {
-        extrablack: '950',
+        extrablack: '950'
       },
       fontSize: {
-        '2xs': '10px',
+        '2xs': '10px'
       },
       boxShadow: {
         'hard-1': '-2px 2px 8px 0px rgba(38, 38, 38, 0.20)',
@@ -184,9 +184,9 @@ module.exports = {
         'soft-1': '0px 0px 10px rgba(38, 38, 38, 0.1)',
         'soft-2': '0px 0px 20px rgba(38, 38, 38, 0.2)',
         'soft-3': '0px 0px 30px rgba(38, 38, 38, 0.1)',
-        'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)',
-      },
-    },
+        'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)'
+      }
+    }
   },
-  plugins: [gluestackPlugin],
+  plugins: [gluestackPlugin]
 };
